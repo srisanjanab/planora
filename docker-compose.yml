@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16
+    container_name: planora_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: planora
+      POSTGRES_PASSWORD: planora_pass
+      POSTGRES_DB: planora_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - planora_pgdata:/var/lib/postgresql/data
+
+volumes:
+  planora_pgdata:
