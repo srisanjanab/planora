@@ -1,3 +1,5 @@
+from datetime import date
+
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
@@ -19,3 +21,8 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
             headers={"WWW-Authenticate": "Bearer"},
         )
     return user
+
+
+def get_today() -> date:
+    """Today's date. A dependency so tests can pretend it is another day."""
+    return date.today()
