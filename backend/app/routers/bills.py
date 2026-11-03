@@ -128,6 +128,8 @@ def list_occurrences(
         query = query.where(BillOccurrence.template_id == bill_id)
     result = []
     for occ in db.scalars(query).all():
+        if status_filter == "REMINDERS" and not occ.template.is_active:
+            continue  # a paused bill must not nag
         out = svc.occurrence_to_out(occ, today)
         wanted = {"DUE", "OVERDUE"} if status_filter == "REMINDERS" else {status_filter}
         if status_filter is None or out.status in wanted:
