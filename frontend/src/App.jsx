@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { getToken, login, register, logout } from './api'
 import { Dashboard, Bills, Expenses, Grocery } from './pages'
+import { Trips } from './trips'
 
-const TABS = { Dashboard, Bills, Expenses, Grocery }
+const TABS = { Dashboard, Bills, Expenses, Grocery, Trips }
 
 function Auth() {
   const [mode, setMode] = useState('login')

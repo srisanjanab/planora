@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from 'react'
 import { api } from './api'
 
-const money = (v) => '₹' + Number(v).toLocaleString('en-IN', { minimumFractionDigits: 2 })
+export const money = (v) => '₹' + Number(v).toLocaleString('en-IN', { minimumFractionDigits: 2 })
 
-function useLoad(path) {
+export function useLoad(path) {
   const [data, setData] = useState(null)
   const [err, setErr] = useState('')
   const load = useCallback(() => api.get(path).then(setData).catch((e) => setErr(e.message)), [path])
@@ -11,17 +11,21 @@ function useLoad(path) {
   return [data, load, err]
 }
 // run an action, then refresh; show errors instead of crashing
-const act = (fn, reload) => fn().then(reload).catch((e) => alert(e.message))
+export const act = (fn, reload) => fn().then(reload).catch((e) => alert(e.message))
 
-function Form({ fields, onSubmit, button }) {
+export function Form({ fields, onSubmit, button }) {
   const init = Object.fromEntries(fields.map((f) => [f.name, f.value ?? '']))
   const [v, setV] = useState(init)
   return (
     <form className="row" onSubmit={(e) => { e.preventDefault(); onSubmit(v).then(() => setV(init)).catch((x) => alert(x.message)) }}>
       {fields.map((f) => f.options ? (
-        <select key={f.name} value={v[f.name]} onChange={(e) => setV({ ...v, [f.name]: e.target.value })}>
-          {f.options.map((o) => <option key={o}>{o}</option>)}
+        <select key={f.name} value={v[f.name]} title={f.label} onChange={(e) => setV({ ...v, [f.name]: e.target.value })}>
+          {f.options.map((o) => <option key={o.value ?? o} value={o.value ?? o}>{o.label ?? o}</option>)}
         </select>
+      ) : f.type === 'date' ? (
+        <label key={f.name} className="fld">{f.label}
+          <input type="date" value={v[f.name]} required={f.required !== false} onChange={(e) => setV({ ...v, [f.name]: e.target.value })} />
+        </label>
       ) : (
         <input key={f.name} type={f.type || 'text'} placeholder={f.label} title={f.label} value={v[f.name]} required={f.required !== false}
           step={f.type === 'number' ? '0.01' : undefined} onChange={(e) => setV({ ...v, [f.name]: e.target.value })} />
@@ -35,7 +39,7 @@ export function Dashboard({ go }) {
   const [d, , err] = useLoad('/dashboard')
   if (err) return <p className="err">{err}</p>
   if (!d) return <p>Loading…</p>
-  const { bills, expenses, grocery } = d
+  const { bills, expenses, grocery, trips } = d
   return (
     <div className="grid">
       <section className="card" onClick={() => go('Bills')}>
@@ -54,7 +58,11 @@ export function Dashboard({ go }) {
         <p className="big">{grocery.remaining} to buy</p>
         <p>{grocery.bought} bought · about {money(grocery.estimated_remaining_cost)} left</p>
       </section>
-      <section className="card"><h2>Trips</h2><p>Coming soon</p></section>
+      <section className="card" onClick={() => go('Trips')}>
+        <h2>Trips</h2>
+        {trips.upcoming.length === 0 && <p>No upcoming trips</p>}
+        {trips.upcoming.map((t) => <p key={t.id}>{t.name} — {t.start_date} <i>{t.status}</i> · spent {money(t.total_spent)}</p>)}
+      </section>
     </div>
   )
 }
