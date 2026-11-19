@@ -5,6 +5,7 @@ from pydantic import BaseModel
 from app.schemas.bill import OccurrenceOut
 from app.schemas.expense import ExpenseOut
 from app.schemas.grocery import GrocerySummary
+from app.schemas.trip import TripSummary
 
 
 class BillsCard(BaseModel):
@@ -23,8 +24,13 @@ class ExpensesCard(BaseModel):
     recent: list[ExpenseOut]  # latest 5
 
 
+class TripsCard(BaseModel):
+    upcoming: list[TripSummary]  # ongoing or upcoming trips, soonest first (max 3)
+
+
 class DashboardOut(BaseModel):
     today: str
     bills: BillsCard
     expenses: ExpensesCard
     grocery: GrocerySummary
+    trips: TripsCard

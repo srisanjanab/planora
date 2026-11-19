@@ -6,12 +6,14 @@ from sqlalchemy.orm import Session
 
 from app.models.bill import BillOccurrence, BillPayment, BillTemplate
 from app.models.expense import Expense
+from app.models.trip import Trip
 from app.models.user import User
-from app.schemas.dashboard import BillsCard, DashboardOut, ExpensesCard
+from app.schemas.dashboard import BillsCard, DashboardOut, ExpensesCard, TripsCard
 from app.schemas.expense import ExpenseOut
 from app.services import bills as bill_svc
 from app.services import expenses as expense_svc
 from app.services import grocery as grocery_svc
+from app.services import trips as trip_svc
 
 ZERO = Decimal("0.00")
 
@@ -65,10 +67,18 @@ def _expenses_card(db: Session, user: User, today: date) -> ExpensesCard:
     )
 
 
+def _trips_card(db: Session, user: User, today: date) -> TripsCard:
+    rows = db.scalars(
+        select(Trip).where(Trip.owner_id == user.id, Trip.end_date >= today).order_by(Trip.start_date).limit(3)
+    ).all()
+    return TripsCard(upcoming=[trip_svc.summary(t, today) for t in rows])
+
+
 def build_dashboard(db: Session, user: User, today: date) -> DashboardOut:
     return DashboardOut(
         today=today.isoformat(),
         bills=_bills_card(db, user, today),
         expenses=_expenses_card(db, user, today),
         grocery=grocery_svc.build_summary(db, user.id),
+        trips=_trips_card(db, user, today),
     )
