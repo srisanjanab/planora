@@ -16,8 +16,9 @@ export const act = (fn, reload) => fn().then(reload).catch((e) => alert(e.messag
 export function Form({ fields, onSubmit, button }) {
   const init = Object.fromEntries(fields.map((f) => [f.name, f.value ?? '']))
   const [v, setV] = useState(init)
+  const [hint, setHint] = useState('')
   return (
-    <form className="row" onSubmit={(e) => { e.preventDefault(); onSubmit(v).then(() => setV(init)).catch((x) => alert(x.message)) }}>
+    <form className="row" onSubmit={(e) => { e.preventDefault(); onSubmit(v).then(() => { setV(init); setHint('') }).catch((x) => alert(x.message)) }}>
       {fields.map((f) => f.options ? (
         <select key={f.name} value={v[f.name]} title={f.label} onChange={(e) => setV({ ...v, [f.name]: e.target.value })}>
           {f.options.map((o) => <option key={o.value ?? o} value={o.value ?? o}>{o.label ?? o}</option>)}
@@ -28,8 +29,10 @@ export function Form({ fields, onSubmit, button }) {
         </label>
       ) : (
         <input key={f.name} type={f.type || 'text'} placeholder={f.label} title={f.label} value={v[f.name]} required={f.required !== false}
-          step={f.type === 'number' ? '0.01' : undefined} onChange={(e) => setV({ ...v, [f.name]: e.target.value })} />
+          step={f.type === 'number' ? '0.01' : undefined} onChange={(e) => setV({ ...v, [f.name]: e.target.value })}
+          onBlur={f.fill ? () => f.fill(v[f.name]).then((r) => { if (r) { setV((c) => ({ ...c, ...r.patch })); setHint(r.hint) } }).catch(() => {}) : undefined} />
       ))}
+      {hint && <small className="hint">{hint}</small>}
       <button>{button}</button>
     </form>
   )
@@ -37,11 +40,19 @@ export function Form({ fields, onSubmit, button }) {
 
 export function Dashboard({ go }) {
   const [d, , err] = useLoad('/dashboard')
+  const [ins] = useLoad('/insights')
   if (err) return <p className="err">{err}</p>
   if (!d) return <p>Loading…</p>
   const { bills, expenses, grocery, trips } = d
   return (
     <div className="grid">
+      {ins && (ins.highlights.length > 0 || ins.bills.length > 0) && (
+        <section className="card wide">
+          <h2>✨ Smart insights</h2>
+          {ins.highlights.map((h, i) => <p key={i}>{h}</p>)}
+          {ins.bills.map((b) => <p key={b.bill_id}>{b.bill_name}: next bill expected around {money(b.forecast_next)} <small>(from your last {b.payments_used} payments)</small></p>)}
+        </section>
+      )}
       <section className="card" onClick={() => go('Bills')}>
         <h2>Daily Bills</h2>
         <p className="big">{bills.reminder_count} to pay · {money(bills.amount_due)}</p>
@@ -103,6 +114,14 @@ export function Bills() {
   )
 }
 
+// AI: ask the backend which category a title belongs to; only auto-fill when it is confident
+const suggest = async (title) => {
+  if (title.trim().length < 3) return null
+  const s = await api.get('/expenses/suggest-category?title=' + encodeURIComponent(title.trim()))
+  if (!s.confident) return null
+  return { patch: { category: s.category }, hint: `✨ Suggested category: ${s.category} (${Math.round(s.confidence * 100)}%${s.source === 'history' ? ', from your past expenses' : ''})` }
+}
+
 export function Expenses() {
   const [list, reload, err] = useLoad('/expenses?limit=30')
   const [sum, reloadSum] = useLoad('/expenses/summary')
@@ -110,7 +129,7 @@ export function Expenses() {
   return (
     <>
       <Form button="Add expense" onSubmit={(v) => api.post('/expenses', v).then(both)} fields={[
-        { name: 'title', label: 'What for?' }, { name: 'amount', label: 'Amount', type: 'number' },
+        { name: 'title', label: 'What for? (category is suggested)', fill: suggest }, { name: 'amount', label: 'Amount', type: 'number' },
         { name: 'category', options: ['FOOD', 'TRAVEL', 'SHOPPING', 'EDUCATION', 'HEALTH', 'ENTERTAINMENT', 'UTILITIES', 'OTHER'], value: 'FOOD' },
       ]} />
       {err && <p className="err">{err}</p>}

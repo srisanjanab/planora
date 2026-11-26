@@ -1,0 +1,217 @@
+title,category
+swiggy dinner,FOOD
+zomato order,FOOD
+lunch at office canteen,FOOD
+dominos pizza,FOOD
+chai and samosa,FOOD
+chicken biryani,FOOD
+breakfast idli dosa,FOOD
+mcdonalds burger,FOOD
+starbucks coffee,FOOD
+kfc chicken bucket,FOOD
+restaurant bill,FOOD
+street food pani puri,FOOD
+ice cream,FOOD
+bakery cake,FOOD
+haldirams snacks,FOOD
+dinner with friends,FOOD
+tea at tapri,FOOD
+fresh juice,FOOD
+veg sandwich,FOOD
+momos,FOOD
+cafe coffee day,FOOD
+veg thali,FOOD
+dhaba stop on highway,FOOD
+food court meal,FOOD
+sweets mithai,FOOD
+pizza hut,FOOD
+birthday party food,FOOD
+lunch,FOOD
+ola cab,TRAVEL
+uber ride to airport,TRAVEL
+auto rickshaw fare,TRAVEL
+metro card recharge,TRAVEL
+petrol for bike,TRAVEL
+bus ticket,TRAVEL
+irctc train ticket,TRAVEL
+indigo flight ticket,TRAVEL
+rapido bike taxi,TRAVEL
+toll fee,TRAVEL
+parking charges,TRAVEL
+diesel for car,TRAVEL
+cab to office,TRAVEL
+redbus booking,TRAVEL
+train to hyderabad,TRAVEL
+vande bharat ticket,TRAVEL
+makemytrip flight,TRAVEL
+hotel stay,TRAVEL
+taxi fare,TRAVEL
+airport transfer,TRAVEL
+fastag recharge,TRAVEL
+bus pass,TRAVEL
+uber auto,TRAVEL
+local train pass,TRAVEL
+travel to college,TRAVEL
+goibibo bus booking,TRAVEL
+amazon order,SHOPPING
+flipkart purchase,SHOPPING
+myntra clothes,SHOPPING
+new running shoes,SHOPPING
+tshirt from max,SHOPPING
+jeans,SHOPPING
+boat earphones,SHOPPING
+phone back cover,SHOPPING
+nykaa makeup,SHOPPING
+wrist watch,SHOPPING
+backpack,SHOPPING
+meesho kurti,SHOPPING
+ajio order,SHOPPING
+laptop bag,SHOPPING
+formal shirt,SHOPPING
+saree,SHOPPING
+sunglasses,SHOPPING
+usb charger cable,SHOPPING
+leather wallet,SHOPPING
+shopping mall,SHOPPING
+decathlon sports shoes,SHOPPING
+zara dress,SHOPPING
+croma electronics,SHOPPING
+ikea furniture,SHOPPING
+home decor items,SHOPPING
+kitchen utensils,SHOPPING
+bedsheet set,SHOPPING
+tuition fees,EDUCATION
+college fees,EDUCATION
+udemy course,EDUCATION
+coursera subscription,EDUCATION
+exam fee,EDUCATION
+books purchase,EDUCATION
+stationery notebooks,EDUCATION
+gate coaching,EDUCATION
+online course,EDUCATION
+pens and notebooks,EDUCATION
+semester fee,EDUCATION
+gre exam registration,EDUCATION
+textbook,EDUCATION
+nptel certification,EDUCATION
+coding bootcamp,EDUCATION
+xerox and printouts,EDUCATION
+project report printing,EDUCATION
+lab fee,EDUCATION
+workshop registration,EDUCATION
+leetcode premium,EDUCATION
+ielts fee,EDUCATION
+certification exam,EDUCATION
+study material,EDUCATION
+school fees,EDUCATION
+coaching class fee,EDUCATION
+geeksforgeeks course,EDUCATION
+project components,EDUCATION
+doctor consultation,HEALTH
+medicines from pharmacy,HEALTH
+apollo pharmacy,HEALTH
+dental checkup,HEALTH
+eye test and glasses,HEALTH
+blood test lab,HEALTH
+health insurance premium,HEALTH
+gym membership,HEALTH
+hospital bill,HEALTH
+vitamins and supplements,HEALTH
+physiotherapy session,HEALTH
+1mg order,HEALTH
+medplus,HEALTH
+x-ray scan,HEALTH
+covid test,HEALTH
+yoga class,HEALTH
+protein powder,HEALTH
+thyroid tablets,HEALTH
+fever medicine,HEALTH
+dermatologist visit,HEALTH
+clinic fees,HEALTH
+vaccination,HEALTH
+full body health checkup,HEALTH
+cough syrup,HEALTH
+pharmeasy,HEALTH
+ayurvedic medicine,HEALTH
+personal fitness trainer,HEALTH
+movie tickets pvr,ENTERTAINMENT
+netflix subscription,ENTERTAINMENT
+spotify premium,ENTERTAINMENT
+bookmyshow concert,ENTERTAINMENT
+amazon prime video,ENTERTAINMENT
+disney hotstar,ENTERTAINMENT
+bowling night,ENTERTAINMENT
+steam game purchase,ENTERTAINMENT
+youtube premium,ENTERTAINMENT
+theme park entry,ENTERTAINMENT
+club cover charge,ENTERTAINMENT
+playstation game,ENTERTAINMENT
+cricket match tickets,ENTERTAINMENT
+inox movie,ENTERTAINMENT
+comedy show tickets,ENTERTAINMENT
+escape room,ENTERTAINMENT
+amusement park,ENTERTAINMENT
+arcade games,ENTERTAINMENT
+sonyliv subscription,ENTERTAINMENT
+zee5 plan,ENTERTAINMENT
+board games,ENTERTAINMENT
+karaoke night,ENTERTAINMENT
+music concert,ENTERTAINMENT
+imax show,ENTERTAINMENT
+ps plus subscription,ENTERTAINMENT
+pub night out,ENTERTAINMENT
+go karting,ENTERTAINMENT
+electricity bill,UTILITIES
+water bill,UTILITIES
+gas cylinder refill,UTILITIES
+jio mobile recharge,UTILITIES
+airtel postpaid,UTILITIES
+broadband bill,UTILITIES
+dth recharge tata play,UTILITIES
+act fibernet internet,UTILITIES
+maintenance charges,UTILITIES
+house rent,UTILITIES
+property tax,UTILITIES
+lpg booking,UTILITIES
+wifi bill,UTILITIES
+landline bill,UTILITIES
+society maintenance,UTILITIES
+bescom bill,UTILITIES
+current bill payment,UTILITIES
+water tanker,UTILITIES
+vi recharge,UTILITIES
+piped gas bill,UTILITIES
+cable tv bill,UTILITIES
+municipal tax,UTILITIES
+fiber plan renewal,UTILITIES
+plumber charges,UTILITIES
+electrician visit,UTILITIES
+ac servicing,UTILITIES
+pest control,UTILITIES
+gift for friend,OTHER
+donation to temple,OTHER
+haircut salon,OTHER
+laundry,OTHER
+courier charges,OTHER
+wedding gift,OTHER
+charity donation,OTHER
+miscellaneous,OTHER
+loan to friend,OTHER
+bank charges,OTHER
+pet food,OTHER
+passport fees,OTHER
+notary charges,OTHER
+cash withdrawn,OTHER
+tip,OTHER
+birthday gift,OTHER
+flowers,OTHER
+repair work,OTHER
+dry cleaning,OTHER
+spa massage,OTHER
+tailoring charges,OTHER
+traffic fine challan,OTHER
+atm fee,OTHER
+temple offerings,OTHER
+pooja items,OTHER
+mehendi,OTHER
+festival decorations,OTHER

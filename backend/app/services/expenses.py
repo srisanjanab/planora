@@ -7,7 +7,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.models.expense import Expense
-from app.schemas.expense import CategoryTotal, ExpenseSummary
+from app.schemas.expense import AltCategory, CategorySuggestion, CategoryTotal, ExpenseSummary
 
 ZERO = Decimal("0.00")
 
@@ -63,4 +63,29 @@ def build_summary(db: Session, user_id: int, year: int, month: int) -> ExpenseSu
         count=count,
         by_category=by_category,
         previous_month_total=prev_total,
+    )
+
+
+CONFIDENCE_THRESHOLD = 0.5
+
+
+def suggest_category(db: Session, user_id: int, title: str) -> CategorySuggestion:
+    """1) If you categorised this exact title before, reuse that (it learns from you).
+    2) Otherwise ask the ML model, and only call it 'confident' above the threshold."""
+    from app.ml import categorizer  # imported lazily so the API starts fast
+
+    title = title.strip()
+    past = db.scalar(
+        select(Expense)
+        .where(Expense.user_id == user_id, func.lower(Expense.title) == title.lower())
+        .order_by(Expense.id.desc())
+        .limit(1)
+    )
+    if past:
+        return CategorySuggestion(category=past.category, confidence=1.0, confident=True, source="history", alternatives=[])
+    ranked = categorizer.predict(title, 3)
+    best, conf = ranked[0]
+    return CategorySuggestion(
+        category=best, confidence=conf, confident=conf >= CONFIDENCE_THRESHOLD, source="model",
+        alternatives=[AltCategory(category=c, confidence=p) for c, p in ranked[1:]],
     )

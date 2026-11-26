@@ -61,3 +61,16 @@ class ExpenseSummary(BaseModel):
     count: int
     by_category: list[CategoryTotal]  # biggest first
     previous_month_total: Decimal
+
+
+class AltCategory(BaseModel):
+    category: str
+    confidence: float
+
+
+class CategorySuggestion(BaseModel):
+    category: str
+    confidence: float  # 0..1
+    confident: bool  # True when the frontend should auto-fill it
+    source: str  # "history" (you used this title before) or "model"
+    alternatives: list[AltCategory]

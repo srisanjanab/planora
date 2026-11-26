@@ -9,6 +9,7 @@ from app.deps import get_current_user, get_today
 from app.models.expense import Expense
 from app.models.user import User
 from app.schemas.expense import (
+    CategorySuggestion,
     ExpenseCategory,
     ExpenseCreate,
     ExpenseOut,
@@ -84,6 +85,16 @@ def expense_summary(
 ):
     year, mon = svc.parse_month(month, today)
     return svc.build_summary(db, user.id, year, mon)
+
+
+@router.get("/suggest-category", response_model=CategorySuggestion)
+def suggest_category(
+    title: str = Query(min_length=1, max_length=150),
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    """AI suggestion: which category does this expense title belong to?"""
+    return svc.suggest_category(db, user.id, title)
 
 
 @router.get("/{expense_id}", response_model=ExpenseOut)
